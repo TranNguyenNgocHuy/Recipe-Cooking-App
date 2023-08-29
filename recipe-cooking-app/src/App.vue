@@ -1,11 +1,11 @@
 <template>
   <section
-    class="w-screen h-[1350px] bg-gradient-to-br from-red-900 to-red-950 flex items-center"
+    class="w-screen h-[1450px] bg-gradient-to-br from-red-900 to-red-950 py-28 flex items-center"
   >
-    <DetailApp />
+    <TheApp />
   </section>
 </template>
 
 <script setup>
-import DetailApp from "./components/DetailApp.vue";
+import TheApp from "./components/TheApp.vue";
 </script>
