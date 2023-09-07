@@ -16,11 +16,15 @@
       >
         <input
           class="rounded-full h-12 w-[340px] px-5 focus:outline-0 focus:invalid:border-none focus:invalid:ring-"
+          id="search"
           type="text"
           placeholder="Search over 1,000,000 recipes..."
+          v-model.trim="searchInput"
+          @keyup.enter="takeSearch()"
         />
         <button
           class="h-12 w-40 rounded-full bg-gradient-to-br from-red-700 to-red-950 text-xs font-semibold tracking-wider text-gray-100 flex justify-center items-center gap-2 absolute right-[-6rem]"
+          @click="takeSearch()"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -84,6 +88,24 @@
     <!-- end div -->
   </section>
 </template>
+
+<script setup>
+import { useStore } from "vuex";
+import { ref } from "vue";
+
+// store vuex
+const store = useStore();
+
+// Input Search
+const searchInput = ref("");
+function takeSearch() {
+  store.commit({
+    type: "takeInputSearch",
+    value: searchInput.value,
+  });
+  searchInput.value = "";
+}
+</script>
 
 <style scoped>
 .logo {

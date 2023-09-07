@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-gray-50 m-auto rounded-lg min-w-[1000px] min-h-[1200px]">
+  <section class="bg-gray-50 m-auto rounded-lg w-[1200px] min-h-[1000px]">
     <TheHeader />
     <TheMain />
   </section>
