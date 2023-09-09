@@ -55,7 +55,6 @@ const store = createStore({
         ingredients: recipe.ingredients,
       };
       state.recipe = recipe;
-      console.log(state.recipe);
     },
 
     // take input search
@@ -76,7 +75,7 @@ const store = createStore({
     },
   },
   getters: {
-    checkSearch(state) {
+    takeSearch(state) {
       return state.searchRecipes;
     },
     changeSearch(state) {
