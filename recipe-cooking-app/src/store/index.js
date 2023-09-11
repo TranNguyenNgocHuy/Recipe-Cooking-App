@@ -4,10 +4,18 @@ import axios from "axios";
 const store = createStore({
   state: {
     recipe: [],
-    searchRecipes: [],
+    searchRecipesResult: [],
     search: "",
     id: "",
+
+    // Pagination
+    numPage: null,
+    currentPage: 1,
+    resultPerPage: 10,
+    nextPage: null,
+    prevPage: null,
   },
+
   actions: {
     // tải công thức
     async fetchRecipes({ commit, state }) {
@@ -29,7 +37,6 @@ const store = createStore({
             `https://forkify-api.herokuapp.com/api/v2/recipes/?search=${state.search}`
           )
           .then((response) => response.data);
-
         commit("POST_SEARCH", data.data);
       } catch (err) {
         console.error(`${err} 🎆🎆🎆🎆🎆`);
@@ -61,10 +68,11 @@ const store = createStore({
     takeInputSearch(state, payload) {
       state.search = payload.value;
     },
-    // Custom data Search
+    // Data Search Recipe Result
     POST_SEARCH(state, payload) {
       let { recipes } = payload;
-      state.searchRecipes = recipes.map((rec) => {
+      // Custom Search Recipes Result
+      state.searchRecipesResult = recipes.map((rec) => {
         return {
           id: rec.id,
           title: rec.title,
@@ -72,13 +80,74 @@ const store = createStore({
           image: rec.image_url,
         };
       });
+
+      // Set CurrentPage = 1
+      state.currentPage = 1;
+
+      // Computed Number Page
+      state.numPage = Math.ceil(recipes.length / state.resultPerPage);
+      console.log(state.numPage);
+
+      //Page 1, and there are other pages
+      if (state.currentPage === 1 && state.numPage > 1) {
+        return (state.nextPage = state.currentPage + 1);
+      }
+      //Last Page
+      if (state.currentPage === state.numPage && state.numPage > 1) {
+        return (state.prevPage = state.currentPage - 1);
+      }
+      //Other page
+      if (state.currentPage < state.numPage) {
+        return (
+          (state.nextPage = state.currentPage + 1) &&
+          (state.prevPage = state.currentPage - 1)
+        );
+      }
+      //Page 1, and there are NO other pages
+    },
+
+    //take Change Current Page
+    changeCurrentPage(state, payload) {
+      return (state.currentPage = payload.value);
+    },
+    //Update Next page
+    updateNextPage(state, payload) {
+      return (state.nextPage = payload.value + 1);
+    },
+    //Update Prev page
+    updatePrevPage(state, payload) {
+      return (state.prevPage = payload.value - 1);
     },
   },
   getters: {
-    takeSearch(state) {
-      return state.searchRecipes;
+    //số trang hiện tại
+    currentPage(state) {
+      return state.currentPage;
     },
-    changeSearch(state) {
+
+    // tổng số phân trang
+    numPage(state) {
+      return state.numPage;
+    },
+
+    //Next Page
+    nextPage(state) {
+      return state.nextPage;
+    },
+
+    //Prev Page
+    prevPage(state) {
+      return state.prevPage;
+    },
+
+    // Kết quả tìm kiếm của 1 trang
+    isSearchResultPage(state) {
+      const start = (state.currentPage - 1) * state.resultPerPage;
+      const end = state.currentPage * state.resultPerPage;
+      return state.searchRecipesResult.slice(start, end);
+    },
+
+    InputSearch(state) {
       return state.search;
     },
 

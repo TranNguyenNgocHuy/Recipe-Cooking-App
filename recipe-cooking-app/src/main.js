@@ -6,6 +6,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 import App from "./App.vue";
 
 import BaseSpiner from "./components/UI/BaseSpiner.vue";
+import BasePagination from "./components/UI/BasePagination.vue";
 
 import router from "./router.js";
 import store from "./store/index.js";
@@ -17,6 +18,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 app.component("base-spiner", BaseSpiner);
+app.component("base-pagination", BasePagination);
 
 app.use(store);
 app.use(router);

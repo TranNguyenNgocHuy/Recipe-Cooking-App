@@ -68,7 +68,7 @@ import IngredientsMainRecipe from "./MainRecipeList/IngredientsMainRecipe.vue";
 import FooterMainRecipe from "./MainRecipeList/FooterMainRecipe.vue";
 import store from "../../store";
 
-import { watch, ref, computed, onMounted } from "vue";
+import { watch, ref, computed } from "vue";
 
 //Spiner Loading
 const isLoading = ref(false);
@@ -79,11 +79,11 @@ const recipe = computed(() => {
 });
 watch(
   () => store.getters.changeId,
-  onMounted(async () => {
+  async () => {
     isLoading.value = true;
     await store.dispatch("fetchRecipes");
     isLoading.value = false;
-  })
+  }
 );
 
 const changeId = ref("");

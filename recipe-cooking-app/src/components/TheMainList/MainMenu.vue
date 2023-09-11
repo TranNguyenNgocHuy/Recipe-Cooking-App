@@ -5,9 +5,11 @@
     </div>
 
     <div v-show="!isLoading">
-      <div v-for="item in dataSearchRecipes" :key="item.id">
+      <div class="mb-8">
         <router-link
-          class="w-[100%] mx-auto grid grid-cols-4 grid-rows-2 px-8 py-5 hover:bg-red-100 hover:-translate-y-[2px] duration-300"
+          v-for="item in SearchRecipesResult"
+          :key="item.id"
+          class="w-[100%] mx-auto grid grid-cols-4 grid-rows-2 px-8 py-4 hover:bg-red-100 hover:-translate-y-[2px] duration-300"
           :to="'/recipe/' + item.id"
         >
           <div class="row-span-2">
@@ -26,12 +28,13 @@
           <p class="col-span-3 truncate">{{ item.publisher }}</p>
         </router-link>
       </div>
+      <base-pagination v-if="SearchRecipesResult.length > 0" />
     </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUpdated } from "vue";
+import { ref, computed, watch } from "vue";
 import { useStore } from "vuex";
 
 // store vuex
@@ -40,28 +43,18 @@ const store = useStore();
 //Spiner Loading
 const isLoading = ref(false);
 
-const dataSearchRecipes = computed(() => {
-  return store.getters.takeSearch;
-});
-
-// watch(
-//   () => store.getters.changeSearch,
-//   onUpdated(() => {
-//     let data = dataSearchRecipes.value;
-//     if (data.length > 0) {
-//       errorSearch.value = false;
-//     } else if (data.length == 0) {
-//       errorSearch.value = true;
-//     }
-//   })
-// );
-
+// Theo dõi input search, nếu thay đổi sẽ cập nhật API Search Recipe
 watch(
-  () => store.getters.changeSearch,
-  onMounted(async () => {
+  () => store.getters.InputSearch,
+  async () => {
     isLoading.value = true;
     await store.dispatch("fetchSearchRecipe");
     isLoading.value = false;
-  })
+  }
 );
+
+// Kết quả tìm kiếm công thức
+const SearchRecipesResult = computed(() => {
+  return store.getters.isSearchResultPage;
+});
 </script>
