@@ -99,7 +99,7 @@ import { ref } from "vue";
 const searchInput = ref("");
 function takeInputSearch() {
   store.commit({
-    type: "apimodule/takeInputSearch",
+    type: "SearchRecipe/takeInputSearch",
     value: searchInput.value,
   });
   searchInput.value = "";

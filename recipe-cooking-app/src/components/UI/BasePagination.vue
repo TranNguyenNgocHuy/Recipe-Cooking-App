@@ -58,32 +58,32 @@ const store = useStore();
 
 //Next Page
 const nextPage = computed(() => {
-  return store.getters["pagination/nextPage"];
+  return store.getters["SearchRecipe/nextPage"];
 });
 
 //Prev Page
 const prevPage = computed(() => {
-  return store.getters["pagination/prevPage"];
+  return store.getters["SearchRecipe/prevPage"];
 });
 
 // Total Page
 const numPage = computed(() => {
-  return store.getters["pagination/numPage"];
+  return store.getters["SearchRecipe/numPage"];
 });
 
 // Update button nextPage and prevPage
 watch(
-  () => store.getters.currentPage,
+  () => store.getters["SearchRecipe/currentPage"],
   (num) => {
-    if (store.getters.currentPage + 1) {
+    if (store.getters["SearchRecipe/currentPage"] + 1) {
       store.commit({
-        type: "updateNextPage",
+        type: "SearchRecipe/updateNextPage",
         value: num,
       });
     }
-    if (store.getters.currentPage - 1) {
+    if (store.getters["SearchRecipe/currentPage"] - 1) {
       store.commit({
-        type: "updatePrevPage",
+        type: "SearchRecipe/updatePrevPage",
         value: num,
       });
     }
@@ -92,13 +92,13 @@ watch(
 
 //Current Page
 const currentPage = computed(() => {
-  return store.getters.currentPage;
+  return store.getters["SearchRecipe/currentPage"];
 });
 
 // Input change Current Page
 function changeCurrentPage(num) {
   store.commit({
-    type: "changeCurrentPage",
+    type: "SearchRecipe/changeCurrentPage",
     value: num,
   });
 }

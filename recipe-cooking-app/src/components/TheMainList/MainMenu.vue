@@ -44,16 +44,16 @@ const isLoading = ref(false);
 
 // Theo dõi input search, nếu thay đổi sẽ cập nhật API Search Recipe
 watch(
-  () => store.getters["apimodule/inputSearch"],
+  () => store.getters["SearchRecipe/inputSearch"],
   async () => {
     isLoading.value = true;
-    await store.dispatch("apimodule/fetchSearchRecipe");
+    await store.dispatch("SearchRecipe/fetchSearchRecipe");
     isLoading.value = false;
   }
 );
 
 // Kết quả tìm kiếm công thức
 const SearchRecipesResult = computed(() => {
-  return store.getters["apimodule/isSearchResultPage"];
+  return store.getters["SearchRecipe/isSearchResultPage"];
 });
 </script>

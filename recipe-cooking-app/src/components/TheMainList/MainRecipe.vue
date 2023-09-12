@@ -77,14 +77,14 @@ const isLoading = ref(false);
 
 // data recipe
 const recipe = computed(() => {
-  return store.getters["apimodule/isRecipe"];
+  return store.getters["Recipe/isRecipe"];
 });
 
 watch(
-  () => store.getters["apimodule/changeId"],
+  () => store.getters["Recipe/changeId"],
   async () => {
     isLoading.value = true;
-    await store.dispatch("apimodule/fetchRecipe");
+    await store.dispatch("Recipe/fetchRecipe");
     isLoading.value = false;
   }
 );
@@ -106,7 +106,7 @@ watch(
   () => changeId.value,
   function takeId() {
     store.commit({
-      type: "apimodule/takeId",
+      type: "Recipe/takeId",
       value: changeId.value,
     });
   }
