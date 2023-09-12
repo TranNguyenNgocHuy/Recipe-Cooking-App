@@ -1,10 +1,19 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
+import updateServings from "./modules/UpdateServingsModule.js";
+import ApiModule from "./modules/ApiModule.js";
+import pagination from "./modules/PaginationModule.js";
+
 const store = createStore({
+  modules: {
+    apimodule: ApiModule,
+    updateServings: updateServings,
+    pagination: pagination,
+  },
   state: {
     recipe: [],
-    searchRecipesResult: [],
+    searchRecipeResults: [],
     search: "",
     id: "",
 
@@ -28,7 +37,6 @@ const store = createStore({
         console.error(`${err} ✨✨✨✨✨`);
       }
     },
-
     // tìm công thức
     async fetchSearchRecipe({ commit, state }) {
       try {
@@ -68,6 +76,7 @@ const store = createStore({
     takeInputSearch(state, payload) {
       state.search = payload.value;
     },
+
     // Data Search Recipe Result
     POST_SEARCH(state, payload) {
       let { recipes } = payload;
@@ -86,7 +95,6 @@ const store = createStore({
 
       // Computed Number Page
       state.numPage = Math.ceil(recipes.length / state.resultPerPage);
-      console.log(state.numPage);
 
       //Page 1, and there are other pages
       if (state.currentPage === 1 && state.numPage > 1) {
@@ -103,7 +111,6 @@ const store = createStore({
           (state.prevPage = state.currentPage - 1)
         );
       }
-      //Page 1, and there are NO other pages
     },
 
     //take Change Current Page
@@ -120,7 +127,7 @@ const store = createStore({
     },
   },
   getters: {
-    //số trang hiện tại
+    //Trang hiện tại
     currentPage(state) {
       return state.currentPage;
     },

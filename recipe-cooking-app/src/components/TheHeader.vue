@@ -20,11 +20,11 @@
           type="text"
           placeholder="Search over 1,000,000 recipes..."
           v-model.trim="searchInput"
-          @keyup.enter="takeSearch()"
+          @keyup.enter="takeInputSearch()"
         />
         <button
           class="h-12 w-40 rounded-full bg-gradient-to-br from-red-700 to-red-950 text-xs font-semibold tracking-wider text-gray-100 flex justify-center items-center gap-2 absolute right-[-6rem]"
-          @click="takeSearch()"
+          @click="takeInputSearch()"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -91,16 +91,15 @@
 
 <script setup>
 import { useStore } from "vuex";
-import { ref } from "vue";
-
 // store vuex
 const store = useStore();
+import { ref } from "vue";
 
 // Input Search
 const searchInput = ref("");
-function takeSearch() {
+function takeInputSearch() {
   store.commit({
-    type: "takeInputSearch",
+    type: "apimodule/takeInputSearch",
     value: searchInput.value,
   });
   searchInput.value = "";

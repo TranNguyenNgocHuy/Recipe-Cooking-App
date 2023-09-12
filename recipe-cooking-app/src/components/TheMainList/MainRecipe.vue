@@ -66,22 +66,25 @@
 import ControlMainRecipe from "./MainRecipeList/ControlMainRecipe.vue";
 import IngredientsMainRecipe from "./MainRecipeList/IngredientsMainRecipe.vue";
 import FooterMainRecipe from "./MainRecipeList/FooterMainRecipe.vue";
-import store from "../../store";
 
 import { watch, ref, computed } from "vue";
+// store vuex
+import { useStore } from "vuex";
+const store = useStore();
 
 //Spiner Loading
 const isLoading = ref(false);
 
 // data recipe
 const recipe = computed(() => {
-  return store.state.recipe;
+  return store.getters["apimodule/isRecipe"];
 });
+
 watch(
-  () => store.getters.changeId,
+  () => store.getters["apimodule/changeId"],
   async () => {
     isLoading.value = true;
-    await store.dispatch("fetchRecipes");
+    await store.dispatch("apimodule/fetchRecipe");
     isLoading.value = false;
   }
 );
@@ -90,19 +93,20 @@ const changeId = ref("");
 
 // Nhận Id từ props route
 const propId = defineProps(["rid"]);
-// theo dõi prodId và cập nhật Id mới
+
+// Theo dõi prodId và cập nhật Id mới
 watch(
   () => propId.rid,
   (id) => {
     changeId.value = id;
   }
 );
-// Nếu có sự thay đổi id thì Update và chuyển về state
+// Nếu có sự thay đổi id thì Update và chuyển id về state
 watch(
   () => changeId.value,
   function takeId() {
     store.commit({
-      type: "takeId",
+      type: "apimodule/takeId",
       value: changeId.value,
     });
   }

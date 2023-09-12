@@ -35,9 +35,8 @@
 
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useStore } from "vuex";
-
 // store vuex
+import { useStore } from "vuex";
 const store = useStore();
 
 //Spiner Loading
@@ -45,16 +44,16 @@ const isLoading = ref(false);
 
 // Theo dõi input search, nếu thay đổi sẽ cập nhật API Search Recipe
 watch(
-  () => store.getters.InputSearch,
+  () => store.getters["apimodule/inputSearch"],
   async () => {
     isLoading.value = true;
-    await store.dispatch("fetchSearchRecipe");
+    await store.dispatch("apimodule/fetchSearchRecipe");
     isLoading.value = false;
   }
 );
 
 // Kết quả tìm kiếm công thức
 const SearchRecipesResult = computed(() => {
-  return store.getters.isSearchResultPage;
+  return store.getters["apimodule/isSearchResultPage"];
 });
 </script>

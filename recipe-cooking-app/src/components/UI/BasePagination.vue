@@ -58,20 +58,20 @@ const store = useStore();
 
 //Next Page
 const nextPage = computed(() => {
-  return store.getters.nextPage;
+  return store.getters["pagination/nextPage"];
 });
 
 //Prev Page
 const prevPage = computed(() => {
-  return store.getters.prevPage;
+  return store.getters["pagination/prevPage"];
 });
 
 // Total Page
 const numPage = computed(() => {
-  return store.getters.numPage;
+  return store.getters["pagination/numPage"];
 });
 
-// Update nút  nextPage và prevPage
+// Update button nextPage and prevPage
 watch(
   () => store.getters.currentPage,
   (num) => {
