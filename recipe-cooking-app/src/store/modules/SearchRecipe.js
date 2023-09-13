@@ -4,7 +4,7 @@ const searchRecipe = {
   namespaced: true,
   state: {
     searchRecipeResults: [],
-    search: "",
+    search: "pizza",
 
     //Pagination
     numPage: null,

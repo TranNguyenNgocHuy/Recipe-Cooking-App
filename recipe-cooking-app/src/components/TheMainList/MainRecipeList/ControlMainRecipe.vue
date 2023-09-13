@@ -40,8 +40,11 @@
           <span>{{ recipe.servings }} SERVINGS</span>
         </p>
 
-        <div class="plus-minus flex gap-1">
-          <button>
+        <div class="flex gap-1">
+          <button
+            class="Plus-btn"
+            @click="controlServings(recipe.servings + 1)"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -57,7 +60,10 @@
               />
             </svg>
           </button>
-          <button>
+          <button
+            class="Minus-btn"
+            @click="controlServings(recipe.servings - 1)"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -98,5 +104,16 @@
 </template>
 
 <script setup>
+import { useStore } from "vuex";
+const store = useStore();
 defineProps(["recipe"]);
+
+function controlServings(newServings) {
+  if (newServings > 0) {
+    store.commit({
+      type: "Recipe/updateNewServings",
+      value: newServings,
+    });
+  }
+}
 </script>

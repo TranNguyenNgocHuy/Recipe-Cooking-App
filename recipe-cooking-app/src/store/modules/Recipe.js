@@ -42,6 +42,14 @@ const recipe = {
       };
       state.recipe = recipe;
     },
+
+    updateNewServings(state, newServings) {
+      state.recipe.ingredients.forEach((ing) => {
+        ing.quantity =
+          (ing.quantity * newServings.value) / state.recipe.servings;
+      });
+      state.recipe.servings = newServings.value;
+    },
   },
   getters: {
     changeId(state) {

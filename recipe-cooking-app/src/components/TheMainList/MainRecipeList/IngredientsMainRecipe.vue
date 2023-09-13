@@ -5,10 +5,12 @@
       RECIPE INGREDIENTS
     </h1>
 
-    <div class="mx-auto w-[75%] grid grid-cols-2 gap-6">
-      <ul class="flex gap-5 items-center" v-for="ing in recipe.ingredients">
-        <el-icon class="icon-check"><Select /></el-icon>
-        <li class="recipe-detail">
+    <div class="ingredient-container mx-auto w-[75%] h-[300px] overflow-y-auto">
+      <ul class="grid grid-cols-2 gap-8">
+        <li class="flex items-center gap-4" v-for="ing in recipe.ingredients">
+          <el-icon class="h-5 w-5 text-red-700 flex-shrink-0"
+            ><Select
+          /></el-icon>
           <span>{{ ing.quantity }} {{ ing.unit }} {{ ing.description }}</span>
         </li>
       </ul>
@@ -22,16 +24,24 @@ defineProps(["recipe"]);
 </script>
 
 <style scoped>
-.icon-check {
-  height: 14px;
-  width: 14px;
-  flex-shrink: 0;
-  color: #c92a2a;
+.ingredient-container::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fef2f2;
+  border-radius: 50px;
 }
-
-.recipe-detail {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+.ingredient-container::-webkit-scrollbar-track {
+  width: 10px;
+  background-color: #fef2f2;
+  border-radius: 50px;
+}
+.ingredient-container::-webkit-scrollbar-thumb {
+  width: 8px;
+  background-color: rgb(201, 42, 42, 0.4);
+  border-radius: 50px;
+}
+.ingredient-container::-webkit-scrollbar-thumb:hover {
+  width: 8px;
+  background-color: rgb(201, 42, 42, 0.6);
+  border-radius: 50px;
 }
 </style>

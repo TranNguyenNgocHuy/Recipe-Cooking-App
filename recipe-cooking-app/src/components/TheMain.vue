@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full min-h-[900px] flex flex-row">
+  <section class="w-full min-h-[1204px] flex flex-row">
     <MainMenu />
     <router-view></router-view>
   </section>

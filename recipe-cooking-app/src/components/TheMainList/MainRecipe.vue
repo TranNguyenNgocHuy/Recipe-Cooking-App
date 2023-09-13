@@ -7,16 +7,16 @@
     <div v-show="!isLoading">
       <div
         v-if="recipe.length === 0"
-        class="w-1/2 mx-auto text-base font-semibold pt-20"
+        class="w-1/2 mx-auto text-lg font-semibold pt-20"
       >
-        <div class="flex gap-2">
+        <div class="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             stroke-width="2"
             stroke="#7f1d1d"
-            class="w-10 h-10 relative -top-2"
+            class="w-8 h-8"
           >
             <path
               stroke-linecap="round"
@@ -25,9 +25,7 @@
             />
           </svg>
 
-          <h1 class="flex">
-            Start by searching for a recipe or an ingredient. Have fun!
-          </h1>
+          <h1 class="flex">Start by choosing a recipe. Have fun!</h1>
         </div>
       </div>
       <!-- end div no data -->
