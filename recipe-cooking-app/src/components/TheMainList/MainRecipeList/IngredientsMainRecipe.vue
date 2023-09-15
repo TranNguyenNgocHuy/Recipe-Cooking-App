@@ -5,7 +5,7 @@
       RECIPE INGREDIENTS
     </h1>
 
-    <div class="ingredient-container mx-auto w-[75%] h-[300px] overflow-y-auto">
+    <div class="ingredient-container mx-auto w-[75%] h-[250px] overflow-y-auto">
       <ul class="grid grid-cols-2 gap-8">
         <li class="flex items-center gap-4" v-for="ing in recipe.ingredients">
           <el-icon class="h-5 w-5 text-red-700 flex-shrink-0"

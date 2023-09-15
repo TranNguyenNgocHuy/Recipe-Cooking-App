@@ -1,5 +1,5 @@
 <template>
-  <div class="basis-[65%] bg-red-200 rounded-br-lg">
+  <div class="basis-[70%] bg-red-200 rounded-br-lg">
     <div class="pt-10" v-show="isLoading">
       <base-spiner></base-spiner>
     </div>
@@ -34,20 +34,20 @@
       <div class="w-full relative" v-else>
         <figure>
           <img
-            class="w-full opacity-50 h-80"
+            class="w-full opacity-50 h-[380px]"
             :src="recipe.image"
             :alt="recipe.title"
           />
         </figure>
 
         <div
-          class="bg-gradient-to-br from-red-700 to-red-950 rounded-lg text-sm font-semibold uppercase text-gray-100 -skew-x-12 origin-bottom -rotate-6 p-4 absolute left-[50%] -translate-x-[50%] top-[280px]"
+          class="bg-gradient-to-br from-red-700 to-red-950 rounded-lg text-sm font-semibold uppercase text-gray-100 -skew-x-12 origin-bottom -rotate-6 p-4 absolute left-[50%] -translate-x-[50%] top-[330px]"
         >
           <p>{{ recipe.title }}</p>
         </div>
 
         <!-- line space -->
-        <ControlMainRecipe :recipe="recipe" />
+        <ControlMainRecipe />
 
         <!-- line space -->
         <IngredientsMainRecipe :recipe="recipe" />

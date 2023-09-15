@@ -5,6 +5,7 @@ const recipe = {
   state: {
     recipe: [],
     id: "",
+    bookmarks: [],
   },
   actions: {
     // Load Recipe
@@ -30,7 +31,7 @@ const recipe = {
     // call API => Custom data Recipe
     POST_RECIPE(state, payload) {
       let { recipe } = payload.data;
-      recipe = {
+      state.recipe = {
         id: recipe.id,
         title: recipe.title,
         publisher: recipe.publisher,
@@ -40,15 +41,40 @@ const recipe = {
         cookingTime: recipe.cooking_time,
         ingredients: recipe.ingredients,
       };
-      state.recipe = recipe;
+
+      if (state.bookmarks.some((bookmark) => bookmark.id === state.recipe.id)) {
+        state.recipe.bookmarked = true;
+      } else {
+        state.recipe.bookmarked = false;
+      }
     },
 
+    // Update new Serving
     updateNewServings(state, newServings) {
       state.recipe.ingredients.forEach((ing) => {
         ing.quantity =
           (ing.quantity * newServings.value) / state.recipe.servings;
       });
       state.recipe.servings = newServings.value;
+    },
+
+    // Thêm bookmark
+    addBookMark(state, recipe) {
+      state.bookmarks.push(recipe.value);
+
+      if (recipe.value.id === state.recipe.id) state.recipe.bookmarked = true;
+
+      localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+    },
+
+    // Xóa bookmark
+    deleteBookMark(state, id) {
+      const index = state.bookmarks.findIndex((el) => el.id === id.value);
+      state.bookmarks.splice(index, 1);
+
+      if (id.value === state.recipe.id) state.recipe.bookmarked = false;
+
+      localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
     },
   },
   getters: {
@@ -58,6 +84,11 @@ const recipe = {
 
     isRecipe(state) {
       return state.recipe;
+    },
+
+    isBookMark(state) {
+      const storage = localStorage.getItem("bookmarks");
+      if (storage) return (state.bookmarks = JSON.parse(storage));
     },
   },
 };

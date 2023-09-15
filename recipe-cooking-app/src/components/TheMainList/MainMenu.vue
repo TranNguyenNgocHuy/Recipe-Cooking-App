@@ -1,6 +1,6 @@
 <template>
   <section
-    class="basis-[35%] min-h-[100%] bg-gray-50 rounded-bl-lg pt-10 flex flex-col"
+    class="basis-[30%] min-h-[100%] bg-gray-50 rounded-bl-lg pt-10 flex flex-col"
   >
     <!-- begin div Spiner -->
     <div v-show="isLoading">
@@ -17,11 +17,10 @@
     </div>
     <!-- end div error search -->
 
-    <div v-show="!isLoading">
-      <div class="mb-8">
+    <div class="h-[1030px] flex flex-col" v-show="!isLoading">
+      <div>
         <router-link
           v-for="item in SearchRecipeResults"
-          :key="item.id"
           class="w-[100%] mx-auto grid grid-cols-4 grid-rows-2 px-8 py-4 hover:bg-red-100 hover:-translate-y-[2px] duration-300"
           :to="'/recipe/' + item.id"
         >
@@ -35,19 +34,18 @@
             </figure>
           </div>
 
-          <p class="col-span-3 truncate text-[#c92a2a] uppercase">
+          <p class="col-span-3 truncate text-[#c92a2a] uppercase self-end">
             {{ item.title }}
           </p>
           <p class="col-span-3 truncate">{{ item.publisher }}</p>
         </router-link>
       </div>
-      <base-pagination v-if="SearchRecipeResults.length > 0" />
+      <base-pagination class="mt-auto" v-if="SearchRecipeResults.length > 0" />
     </div>
 
     <footer class="mt-auto pb-10">
       <h1 class="px-10 text-xs text-center text-gray-400">
-        <span>&#169;</span>Copyright by TRAN NGUYEN NGOC HUY <br />Used for job
-        application projects
+        Make by TRAN NGUYEN NGOC HUY <br />Used for job application projects
       </h1>
     </footer>
   </section>

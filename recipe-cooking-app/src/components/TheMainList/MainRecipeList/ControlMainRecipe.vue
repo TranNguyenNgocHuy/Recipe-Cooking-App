@@ -42,25 +42,6 @@
 
         <div class="flex gap-1">
           <button
-            class="Plus-btn"
-            @click="controlServings(recipe.servings + 1)"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="#450a0a"
-              class="w-6 h-6"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </button>
-          <button
             class="Minus-btn"
             @click="controlServings(recipe.servings - 1)"
           >
@@ -79,11 +60,31 @@
               />
             </svg>
           </button>
+          <button
+            class="Plus-btn"
+            @click="controlServings(recipe.servings + 1)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#450a0a"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
         </div>
       </div>
     </div>
     <button
       class="bg-gradient-to-br from-red-700 to-red-950 h-10 w-10 rounded-full flex justify-center items-center"
+      @click="controlBookMark()"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -92,6 +93,7 @@
         stroke-width="2"
         stroke="#fff"
         class="w-6 h-6"
+        :class="{ '': recipe.bookmarked, 'fill-white': recipe.bookmarked }"
       >
         <path
           stroke-linecap="round"
@@ -104,9 +106,28 @@
 </template>
 
 <script setup>
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
-defineProps(["recipe"]);
+
+// data recipe
+const recipe = computed(() => {
+  return store.getters["Recipe/isRecipe"];
+});
+
+function controlBookMark() {
+  if (!recipe.value.bookmarked) {
+    store.commit({
+      type: "Recipe/addBookMark",
+      value: recipe.value,
+    });
+  } else {
+    store.commit({
+      type: "Recipe/deleteBookMark",
+      value: recipe.value.id,
+    });
+  }
+}
 
 function controlServings(newServings) {
   if (newServings > 0) {
