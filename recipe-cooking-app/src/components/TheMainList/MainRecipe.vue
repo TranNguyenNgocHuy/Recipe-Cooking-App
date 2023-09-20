@@ -34,7 +34,7 @@
       <div class="w-full relative" v-else>
         <figure>
           <img
-            class="w-full opacity-50 h-[380px]"
+            class="w-full opacity-50 h-[380px] bg-gradient-to-br from-red-50 to-red-400"
             :src="recipe.image"
             :alt="recipe.title"
           />

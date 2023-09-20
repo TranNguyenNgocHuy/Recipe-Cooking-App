@@ -1,17 +1,24 @@
 const toggle = {
   namespaced: true,
   state: {
-    addRecipe: false,
+    addRecipePopup: false,
   },
   mutations: {
-    toggleAddRecipe(state) {
-      state.addRecipe = !state.addRecipe;
-      console.log(state.addRecipe);
+    setPopupAddRecipe(state, isOpen) {
+      state.addRecipePopup = isOpen;
+    },
+  },
+  actions: {
+    togglePopupAddRecipe({ commit, state }) {
+      commit("setPopupAddRecipe", !state.addRecipePopup);
+    },
+    closePopupAddRecipe({ commit }) {
+      commit("setPopupAddRecipe", false);
     },
   },
   getters: {
-    controlAddRecipe(state) {
-      return state.addRecipe;
+    isPopupAddRecipe(state) {
+      return state.addRecipePopup;
     },
   },
 };

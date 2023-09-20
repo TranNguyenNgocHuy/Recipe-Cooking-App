@@ -50,7 +50,10 @@
     <!-- begin div -->
     <div class="h-full flex items-center text-sm font-semibold">
       <div class="h-full px-5 flex items-center hover:bg-red-200">
-        <button class="flex gap-1 items-center" @click="toggleAddRecipe()">
+        <button
+          class="h-full flex gap-1 items-center"
+          @click="toggleAddRecipe()"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -104,11 +107,11 @@ import BookMark from "./TheMainList/MainRecipeList/BookMark.vue";
 import { useStore } from "vuex";
 // store vuex
 const store = useStore();
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 
 //toggle form
 function toggleAddRecipe() {
-  store.commit("toggle/toggleAddRecipe");
+  store.dispatch("toggle/togglePopupAddRecipe");
 }
 
 // show data Book Mark

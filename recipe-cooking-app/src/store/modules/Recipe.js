@@ -13,11 +13,45 @@ const recipe = {
       return new Promise((resolve, reject) => {
         API_SERVICE.getRecipe(state.id)
           .then((response) => {
-            commit("POST_RECIPE", response.data);
+            commit("GET_RECIPE", response.data);
             resolve(response.data);
           })
           .catch((err) => {
             reject(console.error(`${err} 🆔🆔🆔🆔🆔`));
+          });
+      });
+    },
+    // Post Recipe
+    sendRecipe({ commit, state }, recipe) {
+      return new Promise((resolve, reject) => {
+        API_SERVICE.postRecipe(recipe)
+          .then((response) => {
+            commit("SEND_RECIPE", response.data);
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(console.error(`${err} ⬆️⬆️⬆️⬆️⬆️`));
+          })
+          .then(() => {
+            commit({
+              type: "addBookMark",
+              value: state.recipe,
+            });
+          });
+      });
+    },
+
+    //Delete Recipe
+    deleteRecipe({ commit }) {
+      return new Promise((resolve, reject) => {
+        API_SERVICE.deleteRecipe(id)
+          .then((response) => {
+            console;
+            // commit('DELETE_RECIPE', r)
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(console.error(`${err} 🗑️🗑️🗑️🗑️🗑️`));
           });
       });
     },
@@ -28,25 +62,20 @@ const recipe = {
       state.id = payload.value;
     },
 
-    // call API => Custom data Recipe
-    POST_RECIPE(state, payload) {
-      let { recipe } = payload.data;
-      state.recipe = {
-        id: recipe.id,
-        title: recipe.title,
-        publisher: recipe.publisher,
-        sourceUrl: recipe.source_url,
-        image: recipe.image_url,
-        servings: recipe.servings,
-        cookingTime: recipe.cooking_time,
-        ingredients: recipe.ingredients,
-      };
+    // Get API => Custom data Recipe
+    GET_RECIPE(state, payload) {
+      state.recipe = createRecipeObject(payload);
 
       if (state.bookmarks.some((bookmark) => bookmark.id === state.recipe.id)) {
         state.recipe.bookmarked = true;
       } else {
         state.recipe.bookmarked = false;
       }
+    },
+
+    // Post APT => Custom Send data Recipe
+    SEND_RECIPE(state, payload) {
+      state.recipe = createRecipeObject(payload);
     },
 
     // Update new Serving
@@ -77,6 +106,7 @@ const recipe = {
       localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
     },
   },
+
   getters: {
     changeId(state) {
       return state.id;
@@ -92,5 +122,20 @@ const recipe = {
     },
   },
 };
+
+function createRecipeObject(data) {
+  const { recipe } = data.data;
+  return {
+    id: recipe.id,
+    title: recipe.title,
+    publisher: recipe.publisher,
+    sourceUrl: recipe.source_url,
+    image: recipe.image_url,
+    servings: recipe.servings,
+    cookingTime: recipe.cooking_time,
+    ingredients: recipe.ingredients,
+    ...(recipe.key && { key: recipe.key }),
+  };
+}
 
 export default recipe;

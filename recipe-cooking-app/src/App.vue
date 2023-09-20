@@ -1,11 +1,11 @@
 <template>
   <section
-    class="w-full min-h-[1400px] bg-gradient-to-br from-red-900 to-red-950"
+    class="w-full min-h-[1400px] bg-gradient-to-br from-red-700 to-red-950"
   >
     <div class="pt-14">
       <TheApp />
     </div>
-    <TheFormAddRecipe v-if="controlAddRecipe" />
+    <TheFormAddRecipe v-if="isPopupAddRecipe" />
   </section>
 </template>
 
@@ -16,7 +16,7 @@ import { computed } from "vue";
 import { useStore } from "vuex";
 const store = useStore();
 
-const controlAddRecipe = computed(() => {
-  return store.getters["toggle/controlAddRecipe"];
+const isPopupAddRecipe = computed(() => {
+  return store.getters["toggle/isPopupAddRecipe"];
 });
 </script>
