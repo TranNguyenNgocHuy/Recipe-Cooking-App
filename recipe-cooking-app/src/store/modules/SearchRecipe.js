@@ -57,6 +57,12 @@ const searchRecipe = {
       state.numPage = Math.ceil(recipes.length / state.resultPerPage);
     },
 
+    //Delete result search recipe
+    DELETE_RESULT_SEARCH(state, id) {
+      const index = state.searchRecipeResults.findIndex((el) => el.id === id);
+      state.searchRecipeResults.splice(index, 1);
+    },
+
     //take Change Current Page
     changeCurrentPage(state, payload) {
       return (state.currentPage = payload.value);

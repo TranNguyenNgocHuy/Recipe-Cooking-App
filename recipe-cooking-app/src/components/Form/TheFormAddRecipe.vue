@@ -271,12 +271,12 @@ async function submitForm() {
     getInputIngredient();
    
      await store.dispatch('Recipe/sendRecipe', addRecipe)
-     
+
      sendRecipeSuccess.value = true
      setTimeout(() => {
        closePopupAddRecipe();
      }, 1000)
-     sendRecipeError.value = false
+     
   } 
 
 

@@ -106,6 +106,7 @@
       <button
         v-if="recipe.key"
         class="bg-gradient-to-br from-red-600 to-red-950 h-10 w-10 rounded-full flex justify-center items-center"
+        @click="deleteRecipe()"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -157,9 +158,14 @@ const recipe = computed(() => {
   return store.getters["Recipe/isRecipe"];
 });
 
+//get ID
+const idRecipe = computed(() => {
+  return store.getters["Recipe/changeId"];
+});
+
 //Delete Recipe
 function deleteRecipe() {
-  store.dispatch("Recipe/deleteRecipe", recipe.id);
+  store.dispatch("Recipe/removeRecipe", idRecipe.value);
 }
 
 // add delete Bookmark
@@ -187,3 +193,18 @@ function controlServings(newServings) {
   }
 }
 </script>
+
+<style scoped>
+.form {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+  background-color: rgb(0, 0, 0, 0.3);
+}
+</style>

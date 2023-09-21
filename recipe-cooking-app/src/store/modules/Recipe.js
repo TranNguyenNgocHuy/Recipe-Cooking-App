@@ -24,6 +24,7 @@ const recipe = {
     // Post Recipe
     sendRecipe({ commit, state }, recipe) {
       return new Promise((resolve, reject) => {
+        console.log(recipe);
         API_SERVICE.postRecipe(recipe)
           .then((response) => {
             commit("SEND_RECIPE", response.data);
@@ -42,16 +43,25 @@ const recipe = {
     },
 
     //Delete Recipe
-    deleteRecipe({ commit }) {
+    removeRecipe({ commit }, id) {
       return new Promise((resolve, reject) => {
         API_SERVICE.deleteRecipe(id)
-          .then((response) => {
-            console;
-            // commit('DELETE_RECIPE', r)
-            resolve(response);
+          .then(() => {
+            // delete Bookmark
+            commit({
+              type: "deleteBookMark",
+              value: id,
+            });
+            resolve();
           })
           .catch((err) => {
             reject(console.error(`${err} 🗑️🗑️🗑️🗑️🗑️`));
+          })
+          .then(() => {
+            //delete recipe
+            commit("DELETE_RECIPE", id);
+            //delete result search recipe
+            commit("SearchRecipe/DELETE_RESULT_SEARCH", id, { root: true });
           });
       });
     },
@@ -73,9 +83,16 @@ const recipe = {
       }
     },
 
-    // Post APT => Custom Send data Recipe
+    // Post API => Custom Send data Recipe
     SEND_RECIPE(state, payload) {
       state.recipe = createRecipeObject(payload);
+    },
+
+    // Delete API => delete recipe
+    DELETE_RECIPE(state, payload) {
+      if ((state.recipe.id = payload)) {
+        state.recipe = [];
+      }
     },
 
     // Update new Serving
