@@ -5,6 +5,7 @@
     <div class="pt-14">
       <TheApp />
     </div>
+
     <TheFormAddRecipe v-if="isPopupAddRecipe" />
   </section>
 </template>
